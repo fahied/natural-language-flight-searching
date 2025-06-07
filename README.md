@@ -9,28 +9,21 @@ NLFlightSearching is a lightweight Swift framework for recognizing flight search
 3. Create an instance of `NLFlightSearching` and implement `NLFlightSearchingDelegate` to receive updates.
 
 ```swift
+import SwiftUI
 import NLFlightSearching
 
-class ViewController: UIViewController, NLFlightSearchingDelegate {
-    var flightSearching: NLFlightSearching?
+struct ContentView: View {
+    @StateObject private var viewModel = FlightSearchingViewModel()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        flightSearching = try? NLFlightSearching(locale: Locale.current)
-        flightSearching?.delegate = self
+    var body: some View {
+        VStack {
+            DialogTextViewRepresentable(attributedText: $viewModel.attributedText)
+            Button(viewModel.recordingStatus == .recording ? "Stop" : "Speak") {
+                viewModel.recordTapped()
+            }
+        }
+        .onAppear { viewModel.setup() }
     }
-
-    func start() throws { try flightSearching?.beginSpeechRecordering() }
-    func stop() { flightSearching?.stopSpeechRecordering() }
-
-    // NLFlightSearchingDelegate
-    func flightSearching(_ flightSearching: NLFlightSearching,
-                         speechHandlerStatusDidChangeTo status: SpeechHandlerStatus) {}
-    func flightSearching(_ flightSearching: NLFlightSearching,
-                         speechRecognized text: String) {}
-    func flightSearchingDidEndRecognizing(_ flightSearching: NLFlightSearching,
-                                          speechRecognized text: String,
-                                          extractedKeywords: [NLFlightSearchingTag:[String]]) {}
 }
 ```
 

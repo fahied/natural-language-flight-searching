@@ -56,3 +56,8 @@ xcrun coremlc compile /path/to/FlightsTagger.mlmodel /path/to/NLFlightSearching
 Copy the resulting `FlightsTagger.mlmodelc` directory into the
 `NLFlightSearching` folder so it is bundled with the framework during the
 build.
+
+## Training with PyTorch
+
+A simple Python script is provided in `scripts/train_flight_ner.py` to demonstrate how you could train a token classification model with PyTorch and the Hugging Face `transformers` library. The script generates synthetic sentences with sample origins, destinations and dates. After training, export the model and convert it to Core ML using `coremltools` if needed.
+

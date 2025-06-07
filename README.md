@@ -54,3 +54,13 @@ build.
 
 A simple Python script is provided in `scripts/train_flight_ner.py` to demonstrate how you could train a token classification model with PyTorch and the Hugging Face `transformers` library. The script generates synthetic sentences with sample origins, destinations and dates. After training, export the model and convert it to Core ML using `coremltools` if needed.
 
+
+### Airport data
+
+The repository includes a CSV file `data/airports.csv` containing IATA airport codes and their corresponding names sourced from the [OpenFlights](https://openflights.org/data.html) database. To download or update the file run:
+
+```bash
+python scripts/download_airports.py
+```
+
+This dataset can be used as input when generating training examples for the NER model.
